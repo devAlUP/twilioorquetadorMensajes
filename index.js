@@ -21,6 +21,13 @@ app.use(express.json());
 app.post('/send-whatsapp', async (req, res) => {
   const { Numero,Escuela,Fecha,Horario,Link,Limite,Nombre } = req.body;
 
+   if (!accountSid || !authToken) {
+        return res.status(500).send({ 
+            success: false, 
+            message: 'Error de configuración: Faltan credenciales de Twilio en el servidor.'
+        });
+    }
+
 
   const variables = {
     // Para {{1}}
