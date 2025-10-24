@@ -57,8 +57,8 @@ console.log(variables)
     res.send({ success: true, message: 'Mensaje de WhatsApp enviado exitosamente.', sid: message.sid,variables,Numero });
 
   } catch (error) {
-    console.error('Error al enviar WhatsApp:', error);
-    res.status(500).send({ success: false, message: 'Error en el servidor al enviar el mensaje.', /*details: error.message,variables*/accountSid, authToken });
+    console.error('Error al enviar WhatsApp:', accountSid, authToken);
+    res.status(500).send({ success: false, message:  /*details: error.message,variables*/accountSid, authToken });
   }
 });
 /*app.listen(PORT, () => {
