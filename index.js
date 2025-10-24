@@ -35,7 +35,7 @@ app.post('/send-whatsapp', async (req, res) => {
     5:Limite,
     6:Nombre
 };
-console.log(variables)
+console.log(variables,Numero)
   // Validación básica
   //if (!recipient || !imageUrl) {
     //return res.status(400).send({ success: false, message: 'Faltan el destinatario o la URL de la imagen.' });
@@ -57,8 +57,8 @@ console.log(variables)
     res.send({ success: true, message: 'Mensaje de WhatsApp enviado exitosamente.', sid: message.sid,variables,Numero });
 
   } catch (error) {
-    console.error('Error al enviar WhatsApp:', accountSid, authToken);
-    res.status(500).send({ success: false, message:  /*details: error.message,variables*/accountSid, authToken });
+    console.error('Error al enviar WhatsApp:', error);
+    res.status(500).send({ success: false, message:  error });
   }
 });
 /*app.listen(PORT, () => {
