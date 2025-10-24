@@ -52,7 +52,7 @@ console.log(variables)
     });
 
     console.log('Mensaje enviado con SID:', message.sid);
-    res.send({ success: true, message: 'Mensaje de WhatsApp enviado exitosamente.', sid: message.sid,variables });
+    res.send({ success: true, message: 'Mensaje de WhatsApp enviado exitosamente.', sid: message.sid,variables,Numero });
 
   } catch (error) {
     console.error('Error al enviar WhatsApp:', error);
