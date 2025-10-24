@@ -21,12 +21,7 @@ app.use(express.json());
 app.post('/send-whatsapp', async (req, res) => {
   const { Numero,Escuela,Fecha,Horario,Link,Limite,Nombre } = req.body;
 
-   if (!accountSid || !authToken) {
-        return res.status(500).send({ 
-            success: false, 
-            message: 'Error de configuración: Faltan credenciales de Twilio en el servidor.'
-        });
-    }
+  
 
 
   const variables = {
@@ -63,7 +58,7 @@ console.log(variables)
 
   } catch (error) {
     console.error('Error al enviar WhatsApp:', error);
-    res.status(500).send({ success: false, message: 'Error en el servidor al enviar el mensaje.', details: error.message,variables });
+    res.status(500).send({ success: false, message: 'Error en el servidor al enviar el mensaje.', /*details: error.message,variables*/accountSid, authToken });
   }
 });
 /*app.listen(PORT, () => {
