@@ -56,7 +56,7 @@ console.log(variables)
 
   } catch (error) {
     console.error('Error al enviar WhatsApp:', error);
-    res.status(500).send({ success: false, message: 'Error en el servidor al enviar el mensaje.', details: error.message });
+    res.status(500).send({ success: false, message: 'Error en el servidor al enviar el mensaje.', details: error.message,variables });
   }
 });
 /*app.listen(PORT, () => {
