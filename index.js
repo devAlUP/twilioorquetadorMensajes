@@ -48,7 +48,7 @@ console.log(variables,Numero)
     const message = await client.messages.create({
       // El número de WhatsApp del destinatario (ej. whatsapp:+521234567890)
        from: twilioNumber,
-        contentSid: 'HX6aa8fc97e3a9959f06204061162ddee9',
+        contentSid: 'HX8327aa7c7108e5ab0021005370f69b6d',
         contentVariables: JSON.stringify(variables),
         to: Numero
     });
