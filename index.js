@@ -5,12 +5,17 @@ const express = require('express');
 const app = express();
 //importacion cors
 const cors = require('cors');
+app.use(cors({
+    origin: '*',
+    methods: ['GET', 'POST', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
 //puerto
 const PORT = 3000;
 const rutasMensajeria = require('./routes/Mensajeria/mensajeria')
 
 
-app.use(cors({ origin: '*' })); // Reemplaza con el puerto de tu app Vue
+
 app.use(express.json());
 //usar Rutas
 app.use('/Escuelas',rutasMensajeria)
