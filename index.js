@@ -13,7 +13,7 @@ const rutasMensajeria = require('./routes/Mensajeria/mensajeria')
 app.use(cors({ origin: '*' })); // Reemplaza con el puerto de tu app Vue
 app.use(express.json());
 //usar Rutas
-app.use('Escuelas/',rutasMensajeria)
+app.use('/Escuelas',rutasMensajeria)
 
 
  
