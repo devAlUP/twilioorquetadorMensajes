@@ -20,6 +20,7 @@ const twilioNumber = process.env.TWILIO_WHATSAPP_NUMBER;
     5:Limite,
     6:Nombre
     };
+console.log(variables);
 
     try {
         const message = await client.messages.create({
