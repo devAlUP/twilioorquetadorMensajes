@@ -6,27 +6,27 @@ const twilio = require('twilio');
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
 const twilioNumber = process.env.TWILIO_WHATSAPP_NUMBER;
- const client = twilio(accountSid, authToken);
+const client = twilio(accountSid, authToken);
 
  //funcion
  exports.sendWhatsapp = async (req, res) => {
     const { Numero,Escuela,Fecha,Horario,Link,Limite,Nombre } = req.body;
      const variables = {
   
-    1: Escuela, 
-    2: Fecha,
-    3: Horario,
-    4:Link,
-    5:Limite,
-    6:Nombre
+    1: Nombre, 
+    2: Escuela,
+    3: Fecha,
+    4:Horario,
+    5:Link,
+    6:Limite
     };
 console.log(variables);
 
     try {
         const message = await client.messages.create({
-      // El número de WhatsApp del destinatario (ej. whatsapp:+521234567890)
+      
             from: twilioNumber,
-            contentSid: 'HX8327aa7c7108e5ab0021005370f69b6d',
+            contentSid: 'HXab56604852682b09420d58b08fb81ed6',
             contentVariables: JSON.stringify(variables),
             to: Numero
         });
