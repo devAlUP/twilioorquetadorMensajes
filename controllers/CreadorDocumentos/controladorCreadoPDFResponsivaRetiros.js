@@ -1,12 +1,12 @@
-const PdfPrinter = require('pdfmake/src/printer');
+const PdfPrinter = require('pdfmake/src/printer')
 const path = require('path');
 
 const fonts = {
   Roboto: {
-    normal: path.join(__dirname, '../../fonts/Roboto-Regular.ttf'),
-    bold: path.join(__dirname, '../../fonts/Roboto-Medium.ttf'),
-    italics: path.join(__dirname, '../../fonts/Roboto-Italic.ttf'),
-    bolditalics: path.join(__dirname, '../../fonts/Roboto-MediumItalic.ttf')
+    normal: path.join(process.cwd(), 'fonts/Roboto-Regular.ttf'),
+    bold: path.join(process.cwd(), 'fonts/Roboto-Medium.ttf'),
+    italics: path.join(process.cwd(), 'fonts/Roboto-Italic.ttf'),
+    bolditalics: path.join(process.cwd(), 'fonts/Roboto-MediumItalic.ttf')
   }
 };
 const printer = new PdfPrinter(fonts);
@@ -28,7 +28,7 @@ Encabezado='EncabezadoNV'
 else{
 Encabezado='EncabezadoLCP'
 }
-if(Encuentrista.edad<18){
+if(Encuentrista.Edad<18){
   Encabezado='EncabezadoMENOR'
 }
 

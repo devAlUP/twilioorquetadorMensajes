@@ -1,5 +1,13 @@
 {
   "version": 2,
+  "functions": {
+    "index.js": {
+      "includeFiles": [
+        "fonts/**",
+        "controllers/CreadorDocumentos/Responsiva.json"
+      ]
+    }
+  },
   "rewrites": [
     {
       "source": "/api/(.*)",
