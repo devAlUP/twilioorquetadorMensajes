@@ -1,19 +1,29 @@
 
 const path = require('path');
 
-// IMPORTANTE: En la 0.3.x para Node, debemos apuntar directamente al archivo del servidor
-// Esto evitará que te devuelva el objeto con 'virtualfs'
+// 1. Cargamos directamente el archivo de servidor desde el build
 let PdfPrinter;
 try {
-    // Intentamos cargar la versión específica de servidor
-    PdfPrinter = require('pdfmake/src/printer'); 
+    // Esta ruta apunta al archivo transpilado para Node.js
+    const pdfmakeServer = require('pdfmake/build/pdfmake.js');
+    
+    if (pdfmakeServer.Printer) {
+        PdfPrinter = pdfmakeServer.Printer;
+    } else if (typeof pdfmakeServer === 'function') {
+        PdfPrinter = pdfmakeServer;
+    } else {
+        PdfPrinter = pdfmakeServer;
+    }
 } catch (e) {
-    // Si la ruta anterior falla, intentamos la ruta de build
-    const pdfmakeNode = require('pdfmake');
-    PdfPrinter = pdfmakeNode.Printer || pdfmakeNode;
+    console.error("Error cargando desde build, intentando fallback:", e.message);
+    PdfPrinter = require('pdfmake');
 }
 
+// 2. LOG CRÍTICO: Si esto no dice 'function', intentaremos una tercera vía
 console.log("DEBUG: Tipo de PdfPrinter detectado:", typeof PdfPrinter);
+console.log("DEBUG: Llaves actuales:", Object.keys(PdfPrinter || {}));
+
+
 const Responsiva = require('./Responsiva.json');
 
 
