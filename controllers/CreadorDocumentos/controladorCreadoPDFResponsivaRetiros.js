@@ -1,23 +1,8 @@
 const path = require('path');
+// En 0.2.10, esta es la forma estándar de Node
+const PdfPrinter = require('pdfmake'); 
 
-let PdfPrinter;
-try {
-    const pdfmakeModule = require('pdfmake/build/pdfmake.js');
-    
-    // En la 0.3.7, el constructor NO es el objeto raíz, es la propiedad .Printer
-    if (pdfmakeModule && pdfmakeModule.Printer) {
-        PdfPrinter = pdfmakeModule.Printer;
-    } else {
-        PdfPrinter = pdfmakeModule;
-    }
-} catch (e) {
-    // Si falla la ruta anterior, intentamos la genérica pero buscando la propiedad
-    const fallback = require('pdfmake');
-    PdfPrinter = fallback.Printer || fallback;
-}
-
-// ESTE LOG DEBE DECIR: DEBUG: PdfPrinter ahora es: function
-console.log("DEBUG: PdfPrinter ahora es:", typeof PdfPrinter);
+console.log("DEBUG FINAL - Tipo de PdfPrinter:", typeof PdfPrinter);
 const Responsiva = require('./Responsiva.json');
 
 
