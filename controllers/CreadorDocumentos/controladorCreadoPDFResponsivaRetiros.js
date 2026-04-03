@@ -1,22 +1,17 @@
 const path = require('path');
 const pdfmake = require('pdfmake');
 
-// 1. Extraemos el constructor basándonos en tu log "object"
+// 1. Extraemos específicamente la clase Printer del objeto
 let PdfPrinter;
 
 if (pdfmake && typeof pdfmake.Printer === 'function') {
-    // Caso más común en 0.3.x: el constructor está en .Printer
     PdfPrinter = pdfmake.Printer;
 } else if (pdfmake && pdfmake.default && typeof pdfmake.default.Printer === 'function') {
-    // Caso de exportación ESM empaquetada
     PdfPrinter = pdfmake.default.Printer;
-} else if (typeof pdfmake === 'function') {
-    // Caso de versión antigua
-    PdfPrinter = pdfmake;
 } else {
-    // Fallback de emergencia: si sigue siendo un objeto, intentamos 
-    // usarlo directamente o lanzamos un error descriptivo
-    PdfPrinter = pdfmake;
+    // Si sigue siendo un objeto, imprimimos sus llaves para debuggear en Vercel
+    console.log("DEBUG - Llaves encontradas en pdfmake:", Object.keys(pdfmake));
+    PdfPrinter = pdfmake; 
 }
 console.log("DEBUG: Tipo de PdfPrinter detectado:", typeof PdfPrinter);
 const Responsiva = require('./Responsiva.json');
