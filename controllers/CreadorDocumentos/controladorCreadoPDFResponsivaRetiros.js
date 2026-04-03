@@ -1,28 +1,23 @@
 const path = require('path');
 
-// 1. Intentamos forzar la carga del archivo de servidor de pdfmake
 let PdfPrinter;
 try {
-    // Apuntamos al archivo que contiene la lógica de servidor (Printer)
-    const pdfmakeServer = require('pdfmake/build/pdfmake.js');
+    const pdfmakeModule = require('pdfmake/build/pdfmake.js');
     
-    // En la 0.3.x, a veces viene como .Printer, a veces como el objeto raíz
-    if (pdfmakeServer.Printer) {
-        PdfPrinter = pdfmakeServer.Printer;
+    // En la 0.3.7, el constructor NO es el objeto raíz, es la propiedad .Printer
+    if (pdfmakeModule && pdfmakeModule.Printer) {
+        PdfPrinter = pdfmakeModule.Printer;
     } else {
-        PdfPrinter = pdfmakeServer;
+        PdfPrinter = pdfmakeModule;
     }
 } catch (e) {
-    console.log("Fallo en carga directa, intentando ruta relativa manual...");
-    // Ruta manual basada en la estructura de node_modules en Vercel
-    const manualPath = path.join(process.cwd(), 'node_modules', 'pdfmake', 'build', 'pdfmake.js');
-    const fallback = require(manualPath);
+    // Si falla la ruta anterior, intentamos la genérica pero buscando la propiedad
+    const fallback = require('pdfmake');
     PdfPrinter = fallback.Printer || fallback;
 }
 
-// ESTO DEBE DECIR "function"
-console.log("DEBUG FINAL - Tipo de PdfPrinter:", typeof PdfPrinter);
-
+// ESTE LOG DEBE DECIR: DEBUG: PdfPrinter ahora es: function
+console.log("DEBUG: PdfPrinter ahora es:", typeof PdfPrinter);
 const Responsiva = require('./Responsiva.json');
 
 
