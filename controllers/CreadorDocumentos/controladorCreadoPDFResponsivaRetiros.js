@@ -13,7 +13,13 @@ const printer = new PdfPrinter(fonts);
 const Responsiva = require('./Responsiva.json')
 
 const generarResponsivaController = async (req, res) => {
+
+  console.log(req.body);
   const { Encuentrista, Expectativa, firmaDataURL,Escuela } = req.body;
+
+
+  
+  
   let Encabezado =null
   if (Escuela=='ESCUELA PARA NUEVOS MIEMBROS')
 {
