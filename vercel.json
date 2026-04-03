@@ -1,8 +1,9 @@
+
 {
   "version": 2,
   "functions": {
     "index.js": {
-      "includeFiles": "node_modules/pdfmake/**"
+      "includeFiles": "{node_modules/pdfmake/build/pdfmake.js,fonts/**,controllers/CreadorDocumentos/Responsiva.json}"
     }
   },
   "rewrites": [

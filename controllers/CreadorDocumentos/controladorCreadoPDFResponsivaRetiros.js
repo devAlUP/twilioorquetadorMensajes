@@ -1,4 +1,9 @@
-const PdfPrinter = require('../../node_modules/pdfmake/build/pdfmake.js');
+// 1. Importa la versión de build (que ya sabemos que Vercel sí encuentra)
+const pdfmake = require('../../node_modules/pdfmake/build/pdfmake.js');
+
+// 2. En la versión de Node, el constructor suele estar en .Printer
+// Intentamos acceder a la clase Printer dentro del objeto exportado
+const PdfPrinter = pdfmake.Printer || pdfmake;
 const path = require('path');
 
 const fonts = {
