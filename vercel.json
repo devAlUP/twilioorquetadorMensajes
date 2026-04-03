@@ -2,17 +2,11 @@
   "version": 2,
   "functions": {
     "index.js": {
-      "includeFiles": "{fonts/**,controllers/CreadorDocumentos/Responsiva.json}"
+      "includeFiles": "{fonts/**,controllers/CreadorDocumentos/Responsiva.json,node_modules/pdfmake/**/*}"
     }
   },
   "rewrites": [
-    {
-      "source": "/api/(.*)",
-      "destination": "index.js"
-    },
-    {
-      "source": "/Escuelas/(.*)",
-      "destination": "index.js"
-    }
+    { "source": "/api/(.*)", "destination": "index.js" },
+    { "source": "/Escuelas/(.*)", "destination": "index.js" }
   ]
 }
