@@ -1,18 +1,18 @@
+
 const path = require('path');
-const pdfmake = require('pdfmake');
 
-// 1. Extraemos específicamente la clase Printer del objeto
+// IMPORTANTE: En la 0.3.x para Node, debemos apuntar directamente al archivo del servidor
+// Esto evitará que te devuelva el objeto con 'virtualfs'
 let PdfPrinter;
-
-if (pdfmake && typeof pdfmake.Printer === 'function') {
-    PdfPrinter = pdfmake.Printer;
-} else if (pdfmake && pdfmake.default && typeof pdfmake.default.Printer === 'function') {
-    PdfPrinter = pdfmake.default.Printer;
-} else {
-    // Si sigue siendo un objeto, imprimimos sus llaves para debuggear en Vercel
-    console.log("DEBUG - Llaves encontradas en pdfmake:", Object.keys(pdfmake));
-    PdfPrinter = pdfmake; 
+try {
+    // Intentamos cargar la versión específica de servidor
+    PdfPrinter = require('pdfmake/src/printer'); 
+} catch (e) {
+    // Si la ruta anterior falla, intentamos la ruta de build
+    const pdfmakeNode = require('pdfmake');
+    PdfPrinter = pdfmakeNode.Printer || pdfmakeNode;
 }
+
 console.log("DEBUG: Tipo de PdfPrinter detectado:", typeof PdfPrinter);
 const Responsiva = require('./Responsiva.json');
 
