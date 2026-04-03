@@ -1,4 +1,5 @@
 require('dotenv').config();
+require('pdfmake');
 //importacion de express
 const express = require('express');
 //Inicializar la aplicación Express

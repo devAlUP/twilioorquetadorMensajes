@@ -2,7 +2,7 @@
   "version": 2,
   "functions": {
     "index.js": {
-      "includeFiles": "{fonts/**,controllers/CreadorDocumentos/Responsiva.json,node_modules/pdfmake/**/*}"
+      "includeFiles": "node_modules/pdfmake/**"
     }
   },
   "rewrites": [
