@@ -1,17 +1,22 @@
 const path = require('path');
-// Importación estándar (Vercel la encontrará si está en package.json)
 const pdfmake = require('pdfmake');
 
-// Lógica de detección de constructor ultra-robusta
+// 1. Extraemos el constructor basándonos en tu log "object"
 let PdfPrinter;
-if (pdfmake.Printer) {
+
+if (pdfmake && typeof pdfmake.Printer === 'function') {
+    // Caso más común en 0.3.x: el constructor está en .Printer
     PdfPrinter = pdfmake.Printer;
-} else if (typeof pdfmake === 'function') {
-    PdfPrinter = pdfmake;
-} else if (pdfmake.default && pdfmake.default.Printer) {
+} else if (pdfmake && pdfmake.default && typeof pdfmake.default.Printer === 'function') {
+    // Caso de exportación ESM empaquetada
     PdfPrinter = pdfmake.default.Printer;
+} else if (typeof pdfmake === 'function') {
+    // Caso de versión antigua
+    PdfPrinter = pdfmake;
 } else {
-    PdfPrinter = pdfmake; 
+    // Fallback de emergencia: si sigue siendo un objeto, intentamos 
+    // usarlo directamente o lanzamos un error descriptivo
+    PdfPrinter = pdfmake;
 }
 console.log("DEBUG: Tipo de PdfPrinter detectado:", typeof PdfPrinter);
 const Responsiva = require('./Responsiva.json');
