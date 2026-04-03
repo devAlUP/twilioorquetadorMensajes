@@ -1,12 +1,28 @@
-// 1. Importa la versión de build (que ya sabemos que Vercel sí encuentra)
-const pdfmake = require('../../node_modules/pdfmake/build/pdfmake.js');
-
-// 2. En la versión de Node, el constructor suele estar en .Printer
-// Intentamos acceder a la clase Printer dentro del objeto exportado
-const PdfPrinter = pdfmake.Printer || (pdfmake.default && pdfmake.default.Printer) || pdfmake;
 const path = require('path');
+// Importación estándar (Vercel la encontrará si está en package.json)
+const pdfmake = require('pdfmake');
 
-const fonts = {
+// Lógica de detección de constructor ultra-robusta
+let PdfPrinter;
+if (pdfmake.Printer) {
+    PdfPrinter = pdfmake.Printer;
+} else if (typeof pdfmake === 'function') {
+    PdfPrinter = pdfmake;
+} else if (pdfmake.default && pdfmake.default.Printer) {
+    PdfPrinter = pdfmake.default.Printer;
+} else {
+    PdfPrinter = pdfmake; 
+}
+console.log("DEBUG: Tipo de PdfPrinter detectado:", typeof PdfPrinter);
+const Responsiva = require('./Responsiva.json');
+
+
+
+
+
+
+const generarResponsivaController = async (req, res) => {
+  const fonts = {
   Roboto: {
     normal: path.join(process.cwd(), 'fonts/Roboto-Regular.ttf'),
     bold: path.join(process.cwd(), 'fonts/Roboto-Medium.ttf'),
@@ -14,10 +30,6 @@ const fonts = {
     bolditalics: path.join(process.cwd(), 'fonts/Roboto-MediumItalic.ttf')
   }
 };
-
-const Responsiva = require('./Responsiva.json')
-
-const generarResponsivaController = async (req, res) => {
 const printer = new PdfPrinter(fonts);
   console.log(req.body);
   const { Encuentrista, Expectativa, firmaDataURL,Escuela } = req.body;
