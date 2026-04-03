@@ -1,11 +1,12 @@
 require('dotenv').config();
-require('pdfmake');
+
 //importacion de express
 const express = require('express');
 //Inicializar la aplicación Express
-const app = express();
+
 //importacion cors
 const cors = require('cors');
+const app = express();
 app.use(cors({
     origin: '*',
     methods: ['GET', 'POST', 'OPTIONS'],

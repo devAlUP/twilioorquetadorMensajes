@@ -3,7 +3,7 @@ const pdfmake = require('../../node_modules/pdfmake/build/pdfmake.js');
 
 // 2. En la versión de Node, el constructor suele estar en .Printer
 // Intentamos acceder a la clase Printer dentro del objeto exportado
-const PdfPrinter = pdfmake.Printer || pdfmake;
+const PdfPrinter = pdfmake.Printer || (pdfmake.default && pdfmake.default.Printer) || pdfmake;
 const path = require('path');
 
 const fonts = {
@@ -14,11 +14,11 @@ const fonts = {
     bolditalics: path.join(process.cwd(), 'fonts/Roboto-MediumItalic.ttf')
   }
 };
-const printer = new PdfPrinter(fonts);
+
 const Responsiva = require('./Responsiva.json')
 
 const generarResponsivaController = async (req, res) => {
-
+const printer = new PdfPrinter(fonts);
   console.log(req.body);
   const { Encuentrista, Expectativa, firmaDataURL,Escuela } = req.body;
 
