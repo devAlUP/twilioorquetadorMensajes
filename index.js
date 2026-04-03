@@ -1,46 +1,38 @@
 require('dotenv').config();
-
-//importacion de express
 const express = require('express');
-//Inicializar la aplicación Express
-
-//importacion cors
 const cors = require('cors');
 const app = express();
-app.use(cors({
-    origin: '*',
-    methods: ['GET', 'POST', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization']
-}));
-//puerto
-app.use(express.json({ limit: '50mb' })); 
-app.use(express.urlencoded({ limit: '50mb', extended: true }));
-const PORT = 3000;
-const rutasMensajeria = require('./routes/Mensajeria/mensajeria')
-const rutasDocumentos = require('./routes/CreadorDocumentos/Documentos')
 
+// 1. Configuración de CORS base
+const corsOptions = {
+    origin: '*', 
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+    credentials: true,
+    optionsSuccessStatus: 200
+};
+app.use(cors(corsOptions));
 
-
-app.use(express.json());
-//usar Rutas
-app.use('/Escuelas',rutasMensajeria)
-app.use('/Escuelas',rutasDocumentos)
-
-
-app.use((err, req, res, next) => {
-  if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
-    return res.status(400).send({ message: "JSON mal formado" });
-  }
-  next();
+// 2. HEADERS MANUALES (Debe ir ANTES de las rutas)
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    if (req.method === 'OPTIONS') {
+        return res.sendStatus(200);
+    }
+    next();
 });
 
- 
+// 3. Middlewares de Body
+app.use(express.json({ limit: '50mb' })); 
+app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
-  
-/*app.listen(PORT, () => {
-  console.log(`Servidor Node.js escuchando en http://localhost:${PORT}`);
-});*/
-module.exports=app
+// 4. Importación y Uso de Rutas
+const rutasMensajeria = require('./routes/Mensajeria/mensajeria');
+const rutasDocumentos = require('./routes/CreadorDocumentos/Documentos');
 
+app.use('/Escuelas', rutasMensajeria);
+app.use('/Escuelas', rutasDocumentos);
 
-
+module.exports = app;
