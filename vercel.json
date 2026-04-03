@@ -2,10 +2,7 @@
   "version": 2,
   "functions": {
     "index.js": {
-      "includeFiles": [
-        "fonts/**",
-        "controllers/CreadorDocumentos/Responsiva.json"
-      ]
+      "includeFiles": "{fonts/**,controllers/CreadorDocumentos/Responsiva.json}"
     }
   },
   "rewrites": [
