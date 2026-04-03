@@ -1,26 +1,27 @@
 const path = require('path');
 
-// FORZAMOS la ruta al archivo de servidor (Server-side)
+// 1. Intentamos forzar la carga del archivo de servidor de pdfmake
 let PdfPrinter;
 try {
-    // Intentamos cargar específicamente el entry point de Node
-    // Si usas require('pdfmake'), Node 22 a veces elige el "browser" por error
-    const pdfmakeNode = require('pdfmake/build/pdfmake.js');
+    // Apuntamos al archivo que contiene la lógica de servidor (Printer)
+    const pdfmakeServer = require('pdfmake/build/pdfmake.js');
     
-    // En la 0.3.7 para servidor, el constructor suele estar aquí:
-    PdfPrinter = pdfmakeNode.Printer || pdfmakeNode;
+    // En la 0.3.x, a veces viene como .Printer, a veces como el objeto raíz
+    if (pdfmakeServer.Printer) {
+        PdfPrinter = pdfmakeServer.Printer;
+    } else {
+        PdfPrinter = pdfmakeServer;
+    }
 } catch (e) {
-    console.log("Fallo require directo, intentando ruta física...");
-    // Fallback: buscando el archivo exacto en el disco de Vercel
-    PdfPrinter = require(path.join(process.cwd(), 'node_modules/pdfmake/build/pdfmake.js'));
+    console.log("Fallo en carga directa, intentando ruta relativa manual...");
+    // Ruta manual basada en la estructura de node_modules en Vercel
+    const manualPath = path.join(process.cwd(), 'node_modules', 'pdfmake', 'build', 'pdfmake.js');
+    const fallback = require(manualPath);
+    PdfPrinter = fallback.Printer || fallback;
 }
 
-// ESTE LOG ES EL QUE IMPORTA:
-// Si sigue saliendo "object" con las llaves 'virtualfs', algo en el empaquetado de Vercel 
-// está forzando la versión de cliente.
-console.log("DEBUG: Tipo de PdfPrinter detectado:", typeof PdfPrinter);
-console.log("DEBUG: Llaves actuales:", Object.keys(PdfPrinter || {}));
-
+// ESTO DEBE DECIR "function"
+console.log("DEBUG FINAL - Tipo de PdfPrinter:", typeof PdfPrinter);
 
 const Responsiva = require('./Responsiva.json');
 
