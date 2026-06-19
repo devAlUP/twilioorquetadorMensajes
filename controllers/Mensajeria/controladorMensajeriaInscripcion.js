@@ -11,7 +11,9 @@ const client = twilio(accountSid, authToken);
  //funcion
  exports.sendWhatsapp = async (req, res) => {
     const { Numero,Escuela,Fecha,Horario,Link,Limite,Nombre } = req.body;
-    const numeroFormateado = Numero.replace('+521', '+52');
+   if (Numero.includes('+521')) {
+        numeroFormateado = Numero.replace('+521', '+52');
+    }
      const variables = {
   
     1: Nombre, 
