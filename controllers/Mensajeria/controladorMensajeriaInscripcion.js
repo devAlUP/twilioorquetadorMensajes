@@ -11,6 +11,7 @@ const client = twilio(accountSid, authToken);
  //funcion
  exports.sendWhatsapp = async (req, res) => {
     const { Numero,Escuela,Fecha,Horario,Link,Limite,Nombre } = req.body;
+    const numeroFormateado = Numero.replace('+521', '+52');
      const variables = {
   
     1: Nombre, 
@@ -28,7 +29,7 @@ console.log(variables);
             messagingServiceSid: messagingServiceSid,
             contentSid: 'HXab56604852682b09420d58b08fb81ed6',
             contentVariables: JSON.stringify(variables),
-            to: Numero
+            to: numeroFormateado
         });
 
         console.log('Mensaje enviado con SID:', message.sid);
