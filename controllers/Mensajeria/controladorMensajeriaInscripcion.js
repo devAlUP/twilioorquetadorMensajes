@@ -5,7 +5,7 @@ const twilio = require('twilio');
 //configuraciones twilio
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
-const twilioNumber = process.env.TWILIO_WHATSAPP_NUMBER;
+const messagingServiceSid = process.env.TWILIO_MESSAGING_SERVICE_SID;
 const client = twilio(accountSid, authToken);
 
  //funcion
@@ -25,7 +25,7 @@ console.log(variables);
     try {
         const message = await client.messages.create({
       
-            from: twilioNumber,
+            messagingServiceSid: messagingServiceSid,
             contentSid: 'HXab56604852682b09420d58b08fb81ed6',
             contentVariables: JSON.stringify(variables),
             to: Numero
