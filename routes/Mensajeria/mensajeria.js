@@ -4,6 +4,6 @@ const controladorInscripcion = require('../../controllers/Mensajeria/controlador
 
 
 // Definimos la ruta relativa
-router.post('/send-whatsapp', controladorInscripcion.sendSms);
+router.post('/send-sms', controladorInscripcion.sendSms);
 
 module.exports = router;
